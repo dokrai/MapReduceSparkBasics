@@ -1,37 +1,31 @@
-## Welcome to GitHub Pages
+## yourgrAAAde
 
-You can use the [editor on GitHub](https://github.com/dokrai/MapReduceSparkBasics/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+**yourgrAAAde** es un predictor de éxito de videojuegos. Pretende deducir las notas que va a obtener un videojuego con unas determinadas características, proporcionadas por el usuario. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Datos
 
-### Markdown
+Los datos utilizados para obtener las estadísticas han sido extraídos de dos CSVs:[IGN](https://www.kaggle.com/egrinstein/20-years-of-games/data) y [Metacritic](https://www.kaggle.com/leonardf/releases-and-sales/data)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+El primero contiene información (id, nota en palabras, título, url en IGN, platforma, nota según IGN, género, si es o no recomendado y el año, mes y día de lanzamiento) de 18.625 videojuegos.
+El segundo contiene información (nombre, platforma, año de lanzamiento, género, compaña , ventas en América, Europa, Japón, otros sitios y totales, nota de los críticos, número de críticos, nota de los usuarios, número de usuaios, desarrolladora y rating) de 16.719 videojuegos.
 
-```markdown
-Syntax highlighted code block
+### Diseño
+Diseño del programa, herramientas que se han usado y por qué.
 
-# Header 1
-## Header 2
-### Header 3
+### Uso de la aplicación
+Cómo se usa
 
-- Bulleted
-- List
+### Rendimiento
+Velocidad, eficiencia... Cómo se han conseguido.
 
-1. Numbered
-2. List
+### Qué hemos aprendido
+Cosas interesantes que hemos aprendido del proyecto.
 
-**Bold** and _Italic_ and `Code` text
+### Qué podemos mejorar
+Proponer mejoras.
 
-[Link](url) and ![Image](src)
-```
+### Conclusiones
+Qué es lo que más nos ha gustado, lo que más nos ha costado, lo más frustrante y qué haríamos diferente.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dokrai/MapReduceSparkBasics/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Nosotros
+Nuestros datos.
