@@ -17,42 +17,46 @@ def users_average(RDDrating):
 def overall_average(RDDrating):
 	ratings = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (1,float(line.split(',')[2])))
 	aggreg1 = ratings.reduceByKey(lambda a,b: a+b)
-	result = aggreg1.map(lambda line: (line[1]/423)) #423 son los que tengo en el fichero de prueba
+	numRatings = ratings.count()
+	result = aggreg1.map(lambda line: (line[1]/numRatings)) 
 	result.saveAsTextFile("overall.txt")
 
-def movies_average(RDDrating,RDDmovies): #tildes...
-	#moviesData = RDDmovies.filter(lambda line: "movieId" not in line).map(lambda line: (int(line.split(',')[0]),str(line.split(',')[1])))
+def movies_average(RDDrating,RDDmovies): 
+	moviesData = RDDmovies.filter(lambda line: "movieId" not in line).map(lambda line: (int(line.split(',')[0]),line.split(',')[1]))
 	ratingsData = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (int(line.split(',')[1]),float(line.split(',')[2])))
 	numRatings = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (int(line.split(',')[1]),1))
 	aggreg1 = ratingsData.reduceByKey(lambda a,b: a+b)
 	aggreg2 = numRatings.reduceByKey(lambda a,b: a+b)
 	union = aggreg1.join(aggreg2)
 	avg = union.map(lambda line: (line[0], line[1][0]/line[1][1]))
-	#result = moviesData.join(avg)
-	avg.saveAsTextFile("movies.txt")
+	union2 = moviesData.join(avg)
+	result = union2.map(lambda line: (line[1][0], line[1][1]))
+	result.saveAsTextFile("movies.txt")
 
 def genres_average(RDDrating,RDDmovies): #ni idea...
 	
 	avg.saveAsTextFile("genres.txt")
 
 def top10(RDDrating,RDDmovies,sc): #tildes...
-	#moviesData = RDDmovies.filter(lambda line: "movieId" not in line).map(lambda line: (int(line.split(',')[0]),str(line.split(',')[1])))
+	moviesData = RDDmovies.filter(lambda line: "movieId" not in line).map(lambda line: (int(line.split(',')[0]),line.split(',')[1]))
 	ratingsData = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (int(line.split(',')[1]),float(line.split(',')[2])))
 	numRatings = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (int(line.split(',')[1]),1))
 	aggreg1 = ratingsData.reduceByKey(lambda a,b: a+b)
 	aggreg2 = numRatings.reduceByKey(lambda a,b: a+b)
 	union = aggreg1.join(aggreg2)
 	avg = union.map(lambda line: (line[1][0]/line[1][1], line[0]))
-	#result = moviesData.join(avg)
 	ordered = avg.sortByKey(False)
 	ten = ordered.take(10)
 	top = sc.parallelize(ten,1)
-	top.saveAsTextFile("top10.txt")
+	topMovies = top.map(lambda line: (line[1], line[0])).join(moviesData)
+	#result = topMovies.map(lambda line: (line[1][1], line[1][0]))
+	topMovies.saveAsTextFile("top10.txt")
 
 def top10_month(RDDrating,RDDmovies): #no entiendo lo que pide...
 	print("Top 10 each month")
 
 def main():
+	#Spark configuration
 	conf = SparkConf().setMaster('local').setAppName('MovieRatings')
 	sc = SparkContext(conf = conf)
 
