@@ -4,14 +4,14 @@
 import sys
 
 previous = None
-suma = 0
+total = 0
 
 for line in sys.stdin:
 	key, value = line.split('\t')
-	if key != previous:
+	if key != previous: # we keep adding until we find the next domain
 		if previous is not None:
-			print("El dominio " + previous + " aparece " + str(suma) + " veces.")
+			print("Domain " + previous + " appears " + str(total) + " times.")
 		previous = key
-		suma = 0
-	suma = suma + int(value)
-print("El dominio " + previous + " aparece " + str(suma) + " veces.")
+		total = 0
+	total = total + int(value)
+print("Domain " + previous + " appears " + str(total) + " times.")

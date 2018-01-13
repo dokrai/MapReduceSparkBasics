@@ -4,15 +4,15 @@
 import sys
 import re
 
-dominio = False
+domain = False
 
 for line in sys.stdin:
-	line = re.sub( r'^\W+|\W+$', '', line ) # parsear linea
-	words = re.split(r"\W+", line) # dividir linea en palabras
+	line = re.sub( r'^\W+|\W+$', '', line ) 
+	words = re.split(r"\W+", line) 
 
-	for words in words: # mostrar palabras de la frase
-		if dominio == True:
+	for words in words: # parse each line
+		if domain == True:
 			print(words.lower() + "\t1")
-			dominio = False
-		if words =="GET" or words == "POST":
-			dominio = True
+			domain = False
+		if words =="GET" or words == "POST": #the next word after each GET or POST is the name of the domain
+			domain = True

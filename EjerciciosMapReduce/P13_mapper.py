@@ -4,14 +4,12 @@
 import sys
 import re
 
-linea = 0
-ignorar = ""
+count = 0
 
 for line in sys.stdin:
-	if linea == 0:
-		re.sub( r'^\W+|\W+$', '' , ignorar)
-		linea = linea + 1
+	if count > 0: # ignore the first line
+		line = re.sub( r'^\W+|\W+$', '', line ) 
+		words = line.split(',', 7) 
+		print(words[0][0:4] + "\t1" + words[4]) # we get the year and the price
 	else:
-		line = re.sub( r'^\W+|\W+$', '', line ) # parsear linea	
-		words = line.split(',', 7) # se trocea la línea para obtener los datos
-		print(words[0][0:4] + "\t1" + words[4])
+		count = count + 1

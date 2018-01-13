@@ -4,18 +4,21 @@
 import sys
 
 previous = None
-suma = 0
-elementos = 0
+total = 0
+elements = 0
 
 for line in sys.stdin:
 	key, value = line.split('\t')
 	if key != previous:
-		if previous is not None:
-			media = suma/elementos
-			elementos = 0
-			print(previous + "\t" + str(media))
+		if previous is not None: # we only calculate the avg once we are done with all the rates for the movie
+			average = total/elements
+			average = round(average,2)
+			elements = 0
+			print(previous + "," + str(average))
 		previous = key
-		suma = 0
-	suma = suma + float(value)
-	elementos = elementos + 1
-print(previous + "\t" + str(media))
+		total = 0
+	total = total + float(value)
+	elements = elements + 1
+average = total/elements
+average = round(average,2)
+print(previous + "," + str(average))

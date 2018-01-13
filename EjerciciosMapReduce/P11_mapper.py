@@ -1,16 +1,15 @@
 #!/usr/bin/python
-# Elena Kaloyanova Popova
+#Elena Kaloyanova Popova
 
 import sys
 import re
 
-
-#buscar = sys.argv[1]
-#print(buscar)
-
+"""
+This program searchs for a given pattern, in this case "must not".
+"""
+count = 1
 for line in sys.stdin:
-	line = re.sub( r'^\W+|\W+$', '', line ) # parsear linea
-	words = re.split(r"\W+", line) # dividir linea en palabras
-
-	for words in words: # mostrar palabras de la frase
-		print( words.lower() + "\t1" )
+    line = re.sub( r'^\W+|\W+$', '', line )
+    if(line.find('must not') >= 0): # look if the line contains the pattern, if so prints the number of the line
+    	print(str(count))
+    count = count+1;

@@ -4,14 +4,12 @@
 import sys
 import re
 
-linea = 0
-ignorar = ""
+count = 0
 
 for line in sys.stdin:
-	if linea == 0:
-		re.sub( r'^\W+|\W+$', '' , ignorar)
-		linea = linea + 1
+	if count > 0:
+		line = re.sub( r'^\W+|\W+$', '', line )
+		numbers = line.split(',', 4) 
+		print(numbers[1] + "\t" + numbers[2]) # get the movie_id and the raiting 
 	else:
-		line = re.sub( r'^\W+|\W+$', '', line ) # parsear linea	
-		numbers = line.split(',', 4) # se trocea la línea para obtener los datos
-		print(numbers[1] + "\t" + numbers[2])
+		count = count + 1
