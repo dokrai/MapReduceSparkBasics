@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#ELena Kaloyanova Popova
+#Elena Kaloyanova Popova
 
 from pyspark import SparkConf, SparkContext
 import string

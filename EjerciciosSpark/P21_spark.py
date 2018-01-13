@@ -1,23 +1,27 @@
 #!/usr/bin/python
-#ELena Kaloyanova Popova
+#Elena Kaloyanova Popova
 
 from pyspark import SparkConf, SparkContext
 import string
 import sys
 
+class Counter(object):
+
+	count = 0
+
+	def counter_up(self):
+		self.count = self.count + 1
+		return self.count
+
 #Spark configuration
-conf = SparkConf().setMaster('local').setAppName('WordCount')
+conf = SparkConf().setMaster('local').setAppName('GrepTool')
 sc = SparkContext(conf = conf)
 
 RDDvar = sc.textFile("input.txt")
-wanted = sys.argv[1] # patron given by the user
+wanted = "must" # the pattern we will search in this case is "must"
+num_line = Counter()
 
-words = RDDvar.flatMap(lambda line: line.split())
+lines = RDDvar.map(lambda line: (str(line),num_line.counter_up()))
+good_lines = lines.filter(lambda line: wanted in line[0])
 
-result = words.map(lambda word: (str(word.lower()).translate(None,string.punctuation),1))
-
-aggreg1 = result.reduceByKey(lambda a, b: a+b)
-
-number = aggreg1.filter(lambda line: wanted in line) # filter the lines which match with the given patron
-
-number.saveAsTextFile("output.txt")
+good_lines.saveAsTextFile("output.txt")
