@@ -14,11 +14,12 @@ def users_average(RDDrating):
 	avg = union.map(lambda line: (line[0], round(line[1][0]/line[1][1],2)))
 	avg.saveAsTextFile("users.txt")
 
-def overall_average(RDDrating):
-	ratings = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (1,float(line.split(',')[2])))
-	aggreg1 = ratings.reduceByKey(lambda a,b: a+b)
+def overall_average(RDDrating,sc):
+	ratings = RDDrating.filter(lambda line: "userId" not in line).map(lambda line: (float(line.split(',')[2])))
+	aggreg1 = ratings.reduce(lambda x,y: x+y)
 	numRatings = ratings.count()
-	result = aggreg1.map(lambda line: (round(line[1]/numRatings,2))) 
+	avg = round(aggreg1/numRatings,2)
+	result = sc.parallelize([avg],1)
 	result.saveAsTextFile("overall.txt")
 
 def movies_average(RDDrating,RDDmovies): 
@@ -84,7 +85,7 @@ def main():
 	if op == 1:
 		users_average(RDDrating) # average rating given by each user
 	elif op == 2:
-		overall_average(RDDrating) # overall average raiting
+		overall_average(RDDrating,sc) # overall average raiting
 	elif op == 3:
 		movies_average(RDDrating,RDDmovies) # average rating of each movie
 	elif op == 4:
